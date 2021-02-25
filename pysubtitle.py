@@ -2,6 +2,7 @@ import boto3
 import datetime
 from botocore.exceptions import ClientError
 import requests
+import subprocess 
 import json
 import os
 
@@ -110,17 +111,23 @@ class Subtile:
         return phrases
     
     
-    def transcribe(self, filename):
+    def transcribe(self, wavfile):
         transcripts = []
+        wavname = os.path.basename(wavfile).split('.')[0]
         try:
             JsonFile = self.GetWordsFromJson()
             for i in range(len(JsonFile)):
-                stime = str(JsonFile[i]['start_time']
+                stime = str(JsonFile[i]['start_time'])
                 etime = str(JsonFile[i]['end_time'])
                 tran = ' '.join(JsonFile[i]['words'])
+                tran = f'{wavname}_{i}|' + tran 
                 transcripts.append(tran)
+                
+                
+                # cut the audio file 
+                subprocess.call(['ffmpeg', '-i', wavfile, '-ss', stime, '-to', etime, f'{wavname}_{i}.wav'])
             
-            with open(f'{filename}.txt', 'w') as f:
+            with open(f'{wavname}.txt', 'w') as f:
                 f.write('\n'.join(transcripts))
         except:
             print('transcriptions failed')

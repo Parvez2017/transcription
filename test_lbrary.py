@@ -15,4 +15,4 @@ from pytranscrib import Transcib
 # trancrib = Transcib(bucket=new_bucket, aws_access_key_id='AKIAVQ4O4UA5EIJ5NMIW', aws_secret_access_key='XsQ2hUfvhU92abzpVHJdquTTO6gukhLX8Jp6ZDIG')
 # print(trancrib.transcribjob('s3://ticon-deep-fake-video/trump.wav', 'en-US'))
 sub = Subtile('trump.json')
-print(sub.subtitle('TrumpNewFF'))
+print(sub.transcribe('trump.wav'))
