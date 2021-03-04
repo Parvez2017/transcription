@@ -125,7 +125,10 @@ class Subtile:
                 
                 
                 # cut the audio file 
+                os.chdir('/media/parvej/ALL/parvez/audiobook_train')
+                print('directory changed')
                 subprocess.call(['ffmpeg', '-i', wavfile, '-ss', stime, '-to', etime, f'{wavname}_{i}.wav'])
+                os.chdir(os.getcwd())
             
             with open(f'{wavname}.txt', 'w') as f:
                 f.write('\n'.join(transcripts))
